@@ -4,6 +4,8 @@ const app = express();
 require('dotenv').config();
 
 
+//routers
+app.use('/play', require('./controllers/play'))
 //home page GET route
 app.get("/", (req,res) =>{
     res.send("This is the homepage for JParty!");
