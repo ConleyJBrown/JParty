@@ -3,17 +3,18 @@ const express = require("express");
 const app = express();
 require('dotenv').config();
 
+//middleware
+app.use(express.json());
 
 //routers
-app.use('/play', require('./controllers/play'))
+app.use('/games', require('./controllers/games'));
+app.use('/users', require('./controllers/users'));
+
 //home page GET route
 app.get("/", (req,res) =>{
     res.send("This is the homepage for JParty!");
 });
 
-app.get('/play', (req,res)=>{
-    res.send("This is where you play a game!");
-});
 
 app.get('*', (req,res)=>  {
     res.status(404).send("Error:404!");
