@@ -14,7 +14,7 @@ app.get('/play', (req,res)=>{
 });
 
 app.get('*', (req,res)=>  {
-    res.send("Error:404!");
+    res.status(404).send("Error:404!");
 });
 
 
