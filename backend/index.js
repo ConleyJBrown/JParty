@@ -1,10 +1,12 @@
 //require express and dotenv
 const express = require("express");
 const app = express();
+const cors = require("cors");
 require('dotenv').config();
 
 //middleware
 app.use(express.json());
+app.use(cors());
 
 //routers
 app.use('/games', require('./controllers/games'));
