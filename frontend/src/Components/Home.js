@@ -7,9 +7,14 @@ export default function Home () {
         </h1>
         <div>
             <Link to='/games'>
-            <button>Play a Game!</button>
+                <button>Play a Game!</button>
             </Link>
-            <button>Create a Game!</button>
+            <Link to='/games/new'>
+                <button>Create a Game!</button>
+            </Link>
+        </div>
+        <div>
+            <Link to='/users/new'>Login or Create an Account</Link>
         </div>
         </>
     )

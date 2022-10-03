@@ -27,7 +27,7 @@ export default function Games () {
                 {data.map((game,index) =>{
                 return(
                  <li key = {game.title}>
-                    <a href={`/games/${index}`}>{game.title}</a>
+                    <a href={`/games/${index}`} className="GameLink">{game.title}</a>
                  </li>
                 )
            
