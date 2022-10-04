@@ -14,13 +14,39 @@
 }
 
 body{
-  background-color: darkblue;
-  color: darkgoldenrod
+  background-color: navy;
+  color: goldenrod;
+  align-items: center;
+}
+
+.HomePageButton{
+  border-radius: 20%;
+  height:50px;
+  width:150px;
+  background-color: white;
+  color:black
+}
+
+.GameColumn{
+  margin: 5px;
+}
+
+.LoginLink{
+  color: goldenrod;
+}
+.ClueWindow{
+  height:400px;
+  width:600px;
+  background-color: blue;
+  color:white;
+  margin:auto
 }
 
 .categoryHeader{
    color: white;
    text-align: center;
+   font-size: larger;
+   font-weight: bold;
 }
 .GameLink{
   color: white
@@ -36,15 +62,3 @@ body{
   color: blue;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

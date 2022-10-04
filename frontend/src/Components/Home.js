@@ -5,16 +5,21 @@ export default function Home () {
         <h1>
             Welcome to J-Party!
         </h1>
+        <br></br>
         <div>
             <Link to='/games'>
-                <button>Play a Game!</button>
-            </Link>
-            <Link to='/games/new'>
-                <button>Create a Game!</button>
+                <button className="HomePageButton">Play a Game!</button>
             </Link>
         </div>
+        <br></br>
         <div>
-            <Link to='/users/new'>Login or Create an Account</Link>
+            <Link to='/games/new'>
+                <button className="HomePageButton">Create a Game!</button>
+            </Link>
+        </div>
+        <br></br>
+        <div>
+            <Link to='/users/new' className="LoginLink">Login or Create an Account</Link>
         </div>
         </>
     )

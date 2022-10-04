@@ -69,6 +69,11 @@ export default function NewGame () {
             </Row>
 
         </Container>
+        <div>
+                <Link to="/">
+                <button>HOME</button>
+                </Link>
+            </div>
         </>
     )
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import '../App.css'
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {Link } from 'react-router-dom';
@@ -18,7 +19,7 @@ export default function PlayGame () {
     const dispatch = useDispatch()
     const displayClue = useSelector((state)=> state.displayClue)
     console.log(store.getState().displayClue.value)
-    const score = 0;
+    const score = useSelector(state => state.score.value)
     useEffect(() => {
         async function fetchData() {
             const response = await fetch(`http://localhost:9000/games/${id}`)
@@ -29,6 +30,8 @@ export default function PlayGame () {
         }
         fetchData()
     }, [])
+
+    
  
         return(
             <>
@@ -42,7 +45,7 @@ export default function PlayGame () {
                     {data.categories &&
                         data.categories.map((category, index) => {
                             return (
-                                <GameColumn category={category} data={data} index={index}/>
+                                <GameColumn className="GameColumn" key={`column${index}`}category={category} data={data} index={index}/>
                             )
                         })
                     }
@@ -53,7 +56,12 @@ export default function PlayGame () {
                 <ClueDisplay/>
             }
              <div>
-                <h2>Player Score: {score}</h2>
+                <h2>Player Score: {useSelector(state => state.score.value)}</h2>
+            </div>
+            <div>
+                <Link to="/">
+                <button>HOME</button>
+                </Link>
             </div>
             </>
         )
