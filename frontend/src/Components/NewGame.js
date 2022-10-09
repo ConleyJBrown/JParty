@@ -27,58 +27,27 @@ export default function NewGame () {
         <br></br>
         <Container>
             <Row>
-                <Col className="categoryHeader" onClick={()=> setColumnToEdit(0)}>{categories[0]}</Col>
-                <Col className="categoryHeader" onClick={()=> setColumnToEdit(1)} >{categories[1]}</Col>
-                <Col className="categoryHeader" onClick={()=> setColumnToEdit(2)}>{categories[2]}</Col>
-                <Col className="categoryHeader" onClick={()=> setColumnToEdit(3)}>{categories[3]}</Col>
-                <Col className="categoryHeader" onClick={()=> setColumnToEdit(4)}>{categories[4]}</Col>
-                <Col className="categoryHeader" onClick={()=> setColumnToEdit(5)}>{categories[5]}</Col>
-            </Row>
-            <Row>
-                <Col>$200</Col>
-                <Col>$200</Col>
-                <Col>$200</Col>
-                <Col>$200</Col>
-                <Col>$200</Col>
-                <Col>$200</Col>
-            </Row>
-            <Row>
-                <Col>$400</Col>
-                <Col>$400</Col>
-                <Col>$400</Col>
-                <Col>$400</Col>
-                <Col>$400</Col>
-                <Col>$400</Col>
-            </Row>
-            <Row>
-                <Col>$600</Col>
-                <Col>$600</Col>
-                <Col>$600</Col>
-                <Col>$600</Col>
-                <Col>$600</Col>
-                <Col>$600</Col>
-            </Row>
-            <Row>
-                <Col>$800</Col>
-                <Col>$800</Col>
-                <Col>$800</Col>
-                <Col>$800</Col>
-                <Col>$800</Col>
-                <Col>$800</Col>
-            </Row>
-            <Row>
-                <Col>$1000</Col>
-                <Col>$1000</Col>
-                <Col>$1000</Col>
-                <Col>$1000</Col>
-                <Col>$1000</Col>
-                <Col>$1000</Col>
-            </Row>
-
+                <Col>
+                <div className="categoryBox" onClick={()=> setColumnToEdit(0)}>{categories[0]}</div>
+                </Col>
+                <Col>
+                <div className="categoryBox" onClick={()=> setColumnToEdit(1)}>{categories[1]}</div>
+                </Col>
+                <Col>
+                <div className="categoryBox" onClick={()=> setColumnToEdit(2)}>{categories[2]}</div>
+                </Col>
+                <Col>
+                <div className="categoryBox" onClick={()=> setColumnToEdit(3)}>{categories[3]}</div>
+                </Col>
+                <Col>
+                <div className="categoryBox" onClick={()=> setColumnToEdit(4)}>{categories[4]}</div>
+                </Col>
+                <Col>
+                <div className="categoryBox" onClick={()=> setColumnToEdit(5)}>{categories[5]}</div>
+                </Col>
+          </Row>
         </Container>
-        <div>
-            <button>SAVE YOUR GAME</button>
-        </div>
+        <br></br>
         <EditColumnForm columnNum={columnToEdit}></EditColumnForm>
         <div>
                 <Link to="/">

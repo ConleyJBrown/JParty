@@ -7,7 +7,7 @@ import {setTrue, setFalse} from '../displayClueSlice'
 
 export default function AnswerForm() {
   const [userAnswer, setUserAnswer] = useState("");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();

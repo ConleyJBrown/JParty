@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import{store} from '../store';
 import {useSelector, useDispatch} from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import { setNewTitle , setNewCategory, setNewClue, setNewAnswer} from '../newGameSlice';
 
@@ -8,10 +9,28 @@ export default function EditColumnForm(props) {
   const [title, setTitle] = useState("");
   const dispatch = useDispatch()
   const columnNum = props.columnNum
+  const navigate = useNavigate()
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     console.log(store.getState())
+
+    //make a POST request to the backend
+    const response = await fetch('http://localhost:9000/games', {
+      method: 'POST',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type':  'application/json'
+      },
+      body: JSON.stringify(store.getState().newGame)
+    })
+    if (response.status !== 201) {
+      // handle error here
+    } 
+    else {
+      navigate('/', {replace: true })
+      console.log(response.body)
+    }
     
   }
 
@@ -24,6 +43,8 @@ export default function EditColumnForm(props) {
           onChange={(e) => dispatch(setNewCategory({ num: columnNum, cat: e.target.value}))}
         />
       </label>
+      <br></br>
+      <br></br>
       <div>
       <label>$200 CLUE:
         <input 
@@ -104,7 +125,8 @@ export default function EditColumnForm(props) {
         />
       </label>
       </div>
-      <input type="submit"></input>
+      <br></br>
+      <input type="submit" value={"FINISH AND SAVE YOUR GAME"}></input>
     </form>
   )
 }

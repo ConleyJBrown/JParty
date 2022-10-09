@@ -27,6 +27,22 @@ body{
   color:black
 }
 
+.categoryBox{
+  width:150px;
+  height:150px;
+  background-color: blue;
+  color:white;
+  text-align: center;
+  font-size: larger;
+  font-weight: bolder;
+  border-style: double;
+  border-color: white;
+  border-width: 5px;
+}
+.categoryBox:hover{
+  background-color: goldenrod
+}
+
 .GameColumn{
   margin: 5px;
 }

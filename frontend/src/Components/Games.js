@@ -6,7 +6,6 @@ export default function Games () {
     useEffect(() => {
         async function fetchData() {
             const response = await fetch('http://localhost:9000/games')
-            console.log(response)
             const data = await response.json()
             console.log(data)
             setData(data)
@@ -27,7 +26,7 @@ export default function Games () {
                 {data.map((game,index) =>{
                 return(
                  <li key = {game.title}>
-                    <a href={`/games/${index}`} className="GameLink">{game.title}</a>
+                    <a href={`/games/${game.game_id}`} className="GameLink">{game.title}</a>
                  </li>
                 )
            

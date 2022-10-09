@@ -36,8 +36,11 @@ export default function PlayGame () {
         return(
             <>
             <h1>
-                Let's Play J-Party! Game Number: {id}
+                Let's Play J-Party!
             </h1>
+            <h2>
+                {data.title} by {data.author}
+            </h2>
             <br></br>
             { !store.getState().displayClue.value &&
              <Container>
