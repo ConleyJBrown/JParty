@@ -12,6 +12,9 @@ export const newGameSlice = createSlice({
         setNewTitle: (state, action) => {
             state.title = action.payload;
         },
+        setNewAuthor: (state, action) => {
+            state.author = action.payload;
+        },
         setNewClue: (state, action) => {
             state.clues[action.payload.num] = action.payload.clue;
         },
@@ -25,5 +28,5 @@ export const newGameSlice = createSlice({
         
     },
 });
-export const {setNewClue, setNewAnswer, setNewCategory, setNewTitle} = newGameSlice.actions;
+export const {setNewClue, setNewAnswer, setNewCategory, setNewTitle, setNewAuthor} = newGameSlice.actions;
 export default newGameSlice.reducer;

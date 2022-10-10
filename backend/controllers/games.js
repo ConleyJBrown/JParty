@@ -11,9 +11,9 @@ const pool = new Pool({
 
 
 //insert a row into the games table
-async function insertGame(title, author_id){
+async function insertGame(title, author_id, author_name){
     return await new Promise((res, rej) => {
-        pool.query(`INSERT INTO games (title,author_id) VALUES ('${title}', ${author_id}) RETURNING *`, (error, results) => {
+        pool.query(`INSERT INTO games (title,author_id, author_name) VALUES ('${title}', ${author_id}, '${author_name}') RETURNING *`, (error, results) => {
             if(error){
                 return rej(error)
             }
@@ -182,7 +182,7 @@ const getAllGames = async (request, response) => {
         console.log(author[0].user_id)
 
         //insert row into the games table
-        const gameInserted = await insertGame(gameToAdd.title, author[0].user_id)
+        const gameInserted = await insertGame(gameToAdd.title, author[0].user_id, gameToAdd.author)
         const gameInsertedID = gameInserted[0].game_id
         console.log("GAME INSERTED INTO TABLE! GAME ID: ")
         console.log(gameInsertedID)

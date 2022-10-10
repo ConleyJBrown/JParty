@@ -1,5 +1,16 @@
 import {Link} from "react-router-dom"
+import { store } from "../store"
+import { useSelector, useDispatch } from "react-redux"
+import {logIn, logOut} from '../loginSlice'
 export default function Home () {
+    const dispatch = useDispatch()
+    const loggedIn = useSelector((state)=> state.login.loggedIn)
+    function handleLogOut(){
+        dispatch(logOut())
+        console.log("USER LOGGED OUT")
+        console.log(store.getState())
+    }
+
     return(
         <>
         <h1>
@@ -19,8 +30,29 @@ export default function Home () {
         </div>
         <br></br>
         <div>
-            <Link to='/users/new' className="LoginLink">Login or Create an Account</Link>
+            <Link to='/games/edit'>
+                <button className="HomePageButton">Edit Your Games</button>
+            </Link>
         </div>
+        <br></br>
+        { !loggedIn &&
+        <div>
+        <div>
+            <Link to='/users' className="LoginLink">Login</Link>
+        </div>
+        <div>or</div>
+        <div>
+            <Link to='/users/new' className="LoginLink">Create an Account</Link>
+        </div>
+        </div>
+        }
+        { loggedIn &&
+        <div>
+        <h3>Logged in as {store.getState().login.username}</h3>
+        <button className = "HomePageButton" onClick={handleLogOut}>Log Out</button>
+        </div>
+
+        }
         </>
     )
 }

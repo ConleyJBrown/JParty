@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import {Link} from "react-router-dom"
+import { store } from '../store';
 
 export default function Games () {
     const [data, setData] = useState([]) 
@@ -17,15 +18,15 @@ export default function Games () {
     return(
         <>
         <h1>
-            Games
+            Your Games
         </h1>
         <h2>
-            Click on a game to play!
+            Choose a Game to Edit
         </h2>
         <div>
             <ul>
                 {data.map((game,index) =>{
-                return(
+                if(game.author_name == store.getState().login.username && store.getState().login.loggedIn)return(
                 
                  <Link className ="GameLink"key ={game.game_id}to ={`/games/${game.game_id}`}>
                     <li>{game.title} by {game.author_name}</li>

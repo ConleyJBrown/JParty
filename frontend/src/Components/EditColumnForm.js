@@ -3,7 +3,7 @@ import{store} from '../store';
 import {useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
-import { setNewTitle , setNewCategory, setNewClue, setNewAnswer} from '../newGameSlice';
+import { setNewTitle , setNewCategory, setNewClue, setNewAnswer, setNewAuthor} from '../newGameSlice';
 
 export default function EditColumnForm(props) {
   const [title, setTitle] = useState("");
@@ -13,6 +13,7 @@ export default function EditColumnForm(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    dispatch(setNewAuthor(store.getState().login.username))
     console.log(store.getState())
 
     //make a POST request to the backend

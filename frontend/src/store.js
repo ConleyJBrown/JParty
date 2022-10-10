@@ -4,10 +4,11 @@ import displayClueReducer from './displayClueSlice'
 import currentClueReducer from './currentClueSlice'
 import cluesAnsweredReducer from './cluesAnsweredSlice'
 import newGameReducer from './newGameSlice'
+import loginReducer from './loginSlice'
 
 export const store = configureStore({
     reducer: {score : scoreReducer, displayClue : displayClueReducer, 
         currentClue: currentClueReducer, cluesAnswered: cluesAnsweredReducer,
-        newGame: newGameReducer
+        newGame: newGameReducer, login: loginReducer
     }
 })

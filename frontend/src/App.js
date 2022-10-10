@@ -7,7 +7,9 @@ import Home from './Components/Home';
 import Games from './Components/Games';
 import PlayGame from './Components/PlayGame';
 import NewGame from './Components/NewGame';
-import LogIn from './Components/LogIn'
+import LogIn from './Components/LogIn';
+import SignUp from './Components/SignUp';
+import EditGames from './Components/EditGames';
 
 function App() {
   return (
@@ -17,9 +19,10 @@ function App() {
         <Route path="/" element={<Home />}/>
         <Route path="/games" element={<Games />}/>
         <Route path="/games/new" element={<NewGame/>}/>
+        <Route path="/games/edit" element={<EditGames/>}/>
         <Route path="/games/:id" element={<PlayGame />}/>
         <Route path ="/users" element= {<LogIn/>}/>
-        {/* <Route path="/users/new" element={<SignUp/>}/> */}
+        <Route path="/users/new" element={<SignUp/>}/>
         </Routes>
       </Router>
     </div>
