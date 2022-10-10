@@ -7,6 +7,7 @@ import Home from './Components/Home';
 import Games from './Components/Games';
 import PlayGame from './Components/PlayGame';
 import NewGame from './Components/NewGame';
+import LogIn from './Components/LogIn'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/games" element={<Games />}/>
         <Route path="/games/new" element={<NewGame/>}/>
         <Route path="/games/:id" element={<PlayGame />}/>
+        <Route path ="/users" element= {<LogIn/>}/>
         {/* <Route path="/users/new" element={<SignUp/>}/> */}
         </Routes>
       </Router>

@@ -28,10 +28,9 @@ export default function EditColumnForm(props) {
       // handle error here
     } 
     else {
-      navigate('/', {replace: true })
       console.log(response.body)
+      navigate('/', {replace: true })
     }
-    
   }
 
   return (

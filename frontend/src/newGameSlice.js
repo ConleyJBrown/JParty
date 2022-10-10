@@ -3,7 +3,7 @@ export const newGameSlice = createSlice({
     name: 'newGame',
     initialState: {
         title: "New Game",
-        author: "",
+        author: "Guest",
         categories: ["Category 1", "Category 2", "Category 3", "Category 4", "Category 5", "Category 6"],
         clues: ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",],
         responses: ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]

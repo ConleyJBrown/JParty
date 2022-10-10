@@ -9,6 +9,43 @@ const pool = new Pool({
   port: 5432,
 })
 
+
+//insert a row into the games table
+async function insertGame(title, author_id){
+    return await new Promise((res, rej) => {
+        pool.query(`INSERT INTO games (title,author_id) VALUES ('${title}', ${author_id}) RETURNING *`, (error, results) => {
+            if(error){
+                return rej(error)
+            }
+            res(results.rows)
+        })
+    })
+}
+
+//insert a row into the categories table
+async function insertCategory(title, game_id){
+    return await new Promise((res, rej) => {
+        pool.query(`INSERT INTO categories (title,game_id) VALUES ('${title}', ${game_id}) RETURNING *`, (error, results) => {
+            if(error){
+                return rej(error)
+            }
+            res(results.rows)
+        })
+    })
+}
+
+//insert a row into the clues table
+async function insertClue(question, answer, cat_id){
+    return await new Promise((res, rej) => {
+        pool.query(`INSERT INTO clues (question, answer ,cat_id) VALUES ('${question}', '${answer}', ${cat_id}) RETURNING *`, (error, results) => {
+            if(error){
+                return rej(error)
+            }
+            res(results.rows)
+        })
+    })
+}
+
 //gets all games from the database
 const getAllGames = async (request, response) => {
     pool.query('SELECT * FROM games ORDER BY game_id ASC', (error, results) => {
@@ -78,6 +115,20 @@ const getAllGames = async (request, response) => {
    })
  }
 
+ //return a user given the user_id
+ async function getUserByName(username){
+    return await new Promise ((res, rej) => {
+         pool.query(`SELECT * FROM users WHERE username='${username}'`, (error, results) => {
+         if (error) {
+             return  rej(error)
+         }
+         console.log("GET USER BY NAME FUNCTION CALLED")
+         console.log(results.rows)
+         res(results.rows)
+     }) 
+   })
+ }
+
  //this function is called when get request is made to /games/:id, 
  //and it returns the game data required for the front end to 
  //display a game for the user to play
@@ -119,78 +170,49 @@ const getAllGames = async (request, response) => {
     console.log(gameToPlay)
     
     response.status(200).send(gameToPlay)
-    
+  }
 
-    //  pool.query(`SELECT * FROM games WHERE game_id='${id}'`, (error, results) => {
-    //     if (error) {
-    //       throw error
-    //     } 
-    //     gameToPlay.title =results.rows[0].title   
-    //   })
+  //this method is called when a POST request is made to /games,
+  //and it adds a new game to the database
+  const addGame = async (request, response) =>{
+        const gameToAdd = request.body
+        console.log(gameToAdd)
+        console.log(gameToAdd.author)
+        const author = await getUserByName(gameToAdd.author)
+        console.log(author[0].user_id)
 
-    // pool.query(`SELECT * FROM categories WHERE game_id='${id}'`, (error, results) => {
-    //     if (error) {
-    //       throw error
-    //     }
-    //     console.log("categories selected from table:")
-    //     console.log(results.rows)
-    //     results.rows.map((category) => {
-    //         gameToPlay.categories.push(category.title)
-    //     })
+        //insert row into the games table
+        const gameInserted = await insertGame(gameToAdd.title, author[0].user_id)
+        const gameInsertedID = gameInserted[0].game_id
+        console.log("GAME INSERTED INTO TABLE! GAME ID: ")
+        console.log(gameInsertedID)
 
-    //   })
-
-    //   console.log(gameToPlay)
+        //insert rows into the categories table
+        for(let i = 0; i < 6; i++){
+            const categoryInserted = await insertCategory(gameToAdd.categories[i], gameInsertedID)
+            const categoryInsertedID = categoryInserted[0].cat_id
+            console.log("CATEGORY INSERTED INTO TABLE! CAT ID")
+            console.log(categoryInsertedID)
+            //insert clues into the clue table
+            for(let j = i*5; j < (i*5)+5; j++){
+                const clueInserted = await insertClue(gameToAdd.clues[j], gameToAdd.responses[j], categoryInsertedID)
+                const clueInsertedID = clueInserted[0].clue_id
+                console.log("CLUE INSERTED INTO TABLE! CLUE ID:")
+                console.log (clueInsertedID)
+            }
+        }
+        //response.status(201)
   }
 
 
 
-const games = [];
-const game1 = {
-    title: "Game 1",
-    author: "Conley",
-    categories: [],
-    clues: [],
-    responses: []
-}
-const game2 = {
-    title: "Game 2",
-    author: "Conley",
-    categories:[],
-    clues: [],
-    responses: []
-}
-
-game1.clues = 
-["1 + 1 = ?", "2+2 = ?","3+3 = ?", "4 + 4 =?", "5+5 = ?",
-"The capital of Spain", "The Capital of Russia", "The Capital of China", "The Capital of Poland", "The Capital of Montenegro",
-"The first president of the US", "The president during the US Civil War", "The president on the $20 bill", "The president who signed NAFTA into law", "The president who promised to build a wall",
-"The color of an orange", "The color of the sky", "The color of a cloud", "The color of grass", "The color of a banana",
-"The group that sang 'Hey Jude'", "The band that sang 'Satisfaction'", "He sang 'What a Wonderful World", "She sang 'Oops, I did it again'", "He played the Goblin King in the movie 'Labyrinth'",
-"The Big Bad this animal ate Little Red Riding Hood", "He is Gretel's Brother", "The Brothers with this last name collected and published fairy tales", "A man made of this ran as fast as he could", "She tumbled down the hill with Jack"
-]
-game1.responses = 
-["2", "4", "6", "8", "10",
-"Madrid", "Moscow", "Beijing", "Warsaw", "Podgorica",
-"Washington", "Lincoln", "Jackson", "Clinton", "Trump",
-"orange", "blue", "white", "green", "yellow",
-"the beatles", "the rolling stones", "louis armstrong", "britney spears", "david bowie",
-"wolf", "Hansel", "Grimm", "Gingerbread", "Jill"
-]
-game1.categories = ["Math", "World Capitals", "US Presidents", "Colors", "Music", "Fairy Tales"]
-games.push(game1)
-games.push(game2)
 
 
 //Games Index
 router.get('/', getAllGames);
 
 //Create Game
-router.post('/', (req,res)=>{
-    console.log(req.body)
-    res.body = "SCOOBYDOOBYDOO"
-    res.status(201);
-});
+router.post('/', addGame);
 
 //New Game Form
 router.get('/new', (req,res)=>{
@@ -216,4 +238,4 @@ router.delete('/:id/', (req,res)=>{
 
 
 
-module.exports = router
+module.exports = router;
