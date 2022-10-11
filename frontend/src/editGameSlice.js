@@ -1,32 +1,32 @@
 import { createSlice } from '@reduxjs/toolkit';
-export const newGameSlice = createSlice({
-    name: 'newGame',
+export const editGameSlice = createSlice({
+    name: 'editGame',
     initialState: {
-        title: "New Game",
-        author: "GUEST",
+        title: "",
+        author: "",
         categories: ["Category 1", "Category 2", "Category 3", "Category 4", "Category 5", "Category 6"],
         clues: ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",],
         responses: ["","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""]
     },
     reducers: {
-        setNewTitle: (state, action) => {
+        setEditTitle: (state, action) => {
             state.title = action.payload;
         },
-        setNewAuthor: (state, action) => {
+        setEditAuthor: (state, action) => {
             state.author = action.payload;
         },
-        setNewClue: (state, action) => {
+        setEditClue: (state, action) => {
             state.clues[action.payload.num] = action.payload.clue;
         },
 
-        setNewAnswer: (state, action) =>{
+        setEditAnswer: (state, action) =>{
             state.responses[action.payload.num] = action.payload.response;
         },
-        setNewCategory: (state, action) => {
+        setEditCategory: (state, action) => {
             state.categories[action.payload.num] = action.payload.cat;
         }
         
     },
 });
-export const {setNewClue, setNewAnswer, setNewCategory, setNewTitle, setNewAuthor} = newGameSlice.actions;
-export default newGameSlice.reducer;
+export const {setEditClue, setEditAnswer, setEditCategory, setEditTitle, setEditAuthor} = editGameSlice.actions;
+export default editGameSlice.reducer;

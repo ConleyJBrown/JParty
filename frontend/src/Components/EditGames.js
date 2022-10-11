@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import {Link} from "react-router-dom"
 import { store } from '../store';
 
-export default function Games () {
+export default function EditGames () {
     const [data, setData] = useState([]) 
 
     useEffect(() => {
@@ -28,7 +28,7 @@ export default function Games () {
                 {data.map((game,index) =>{
                 if(game.author_name == store.getState().login.username && store.getState().login.loggedIn)return(
                 
-                 <Link className ="GameLink"key ={game.game_id}to ={`/games/${game.game_id}`}>
+                 <Link className ="GameLink"key ={game.game_id}to ={`/games/edit/${game.game_id}`}>
                     <li>{game.title} by {game.author_name}</li>
                  </Link>
                 )

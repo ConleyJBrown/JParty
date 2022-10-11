@@ -20,6 +20,7 @@ export default function PlayGame () {
     const displayClue = useSelector((state)=> state.displayClue)
     console.log(store.getState().displayClue.value)
     const score = useSelector(state => state.score.value)
+    
     useEffect(() => {
         async function fetchData() {
             const response = await fetch(`http://localhost:9000/games/${id}`)

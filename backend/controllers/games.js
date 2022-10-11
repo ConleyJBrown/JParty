@@ -223,9 +223,7 @@ router.get('/new', (req,res)=>{
 router.get('/:id', playGame);
 
 //Edit Game
-router.get('/:id/edit', (req,res)=>{
-    res.send("This will display the page for editing a game")
-});
+router.get('/edit/:id', playGame);
 
 router.put('/:id', (req,res)=>{
     res.send("This route will update a game in the database!")
