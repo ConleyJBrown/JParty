@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function SignUp(){
@@ -7,6 +8,7 @@ export default function SignUp(){
     const[passwordField, setPasswordField] = useState("")
     const[confirmPasswordField,setConfirmPasswordField] = useState("")
     const[emailField, setEmailField] = useState("")
+    const navigate = useNavigate()
    
    
     useEffect(() => {
@@ -47,7 +49,7 @@ export default function SignUp(){
             } 
             else {
                 console.log(response.body)
-                //navigate('/', {replace: true })
+                navigate('/', {replace: true })
             }
             
         }

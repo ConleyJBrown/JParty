@@ -204,6 +204,13 @@ const getAllGames = async (request, response) => {
         //response.status(201)
   }
 
+  const updateGame = async (request, response) => {
+    const {id} = request.params
+    console.log("UPDATE GAME FUNCTION CALLED")
+    console.log(id)
+    console.log(request.body)
+  }
+
 
 
 
@@ -225,9 +232,7 @@ router.get('/:id', playGame);
 //Edit Game
 router.get('/edit/:id', playGame);
 
-router.put('/:id', (req,res)=>{
-    res.send("This route will update a game in the database!")
-});
+router.post('/:id', updateGame);
 
 router.delete('/:id/', (req,res)=>{
     res.send("This route will delete a game from the database")

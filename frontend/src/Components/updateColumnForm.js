@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import{store} from '../store';
 import {useSelector, useDispatch} from 'react-redux'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import { setEditTitle , setEditCategory, setEditClue, setEditAnswer, setEditAuthor} from '../editGameSlice';
 
@@ -10,14 +10,15 @@ export default function UpdateColumnForm(props) {
   const dispatch = useDispatch()
   const columnNum = props.columnNum
   const navigate = useNavigate()
+  const {id} = useParams()
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    dispatch(setEditAuthor(store.getState().editGame.username))
+    dispatch(setEditAuthor(store.getState().login.username))
     console.log(store.getState())
 
     //make a POST request to the backend
-    const response = await fetch('http://localhost:9000/games', {
+    const response = await fetch(`http://localhost:9000/games/${id}`, {
       method: 'POST',
       headers: {
           'Accept': 'application/json',
