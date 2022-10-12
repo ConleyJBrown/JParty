@@ -43,6 +43,11 @@ body{
   background-color: goldenrod
 }
 
+.DeleteButton{
+  background-color: red;
+  color:white;
+}
+
 .GameColumn{
   margin: 5px;
 }

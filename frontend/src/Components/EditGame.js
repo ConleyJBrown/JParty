@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useParams} from 'react-router-dom';
+import { useNavigate, useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
@@ -17,6 +17,7 @@ export default function EditGame () {
     const categories = useSelector((state)=> state.editGame.categories)
     const [columnToEdit, setColumnToEdit] = useState(0)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     useEffect(() => {
         async function fetchData() {
@@ -41,6 +42,24 @@ export default function EditGame () {
         }
         fetchData()
     }, [dispatch, id])
+
+    const handleDelete= async (e) => {       
+    const response = await fetch(`http://localhost:9000/games/${id}`, {
+      method: 'DELETE',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type':  'application/json'
+      },
+      body: JSON.stringify(store.getState().editGame)
+    })
+    if (response.status !== 201) {
+      // handle error here
+    } 
+    else {
+      console.log(response.body)
+      navigate('/', {replace: true })
+    }
+  }
 
     
     
@@ -82,10 +101,13 @@ export default function EditGame () {
         <br></br>
         <UpdateColumnForm columnNum={columnToEdit}></UpdateColumnForm>
         <div>
+            <button className="DeleteButton" onClick={handleDelete}>DELETE THIS GAME</button>
+        </div>
+        <div>
                 <Link to="/">
                 <button>HOME</button>
                 </Link>
-            </div>
+         </div>
         </>
     )
 }

@@ -167,6 +167,66 @@ const getAllGames = async (request, response) => {
    })
  }
 
+
+ //deleteGame
+const deleteGame = async (request, response) => {
+    const {id} = request.params
+    console.log("DELETE GAME FUNCTION CALLED GAME ID IS")
+    console.log(id)
+    const categoriesToDelete = await getCategoriesOfGame(id)
+    console.log(categoriesToDelete)
+    for (let i =0; i < 6; i++){
+        //get clues to delete
+       await deleteCluesByCategory(categoriesToDelete[i].cat_id)
+    }
+    //delete categories
+    await deleteCategoriesByGame(id)
+   await deleteAGame(id)
+   response.status(201).send("Game Deleted")
+    
+ }
+
+ //delete clues by cat
+ async function deleteCluesByCategory(catID){
+    return await new Promise ((res, rej) => {
+         pool.query(`DELETE FROM clues WHERE cat_id=${catID}`, (error, results) => {
+         if (error) {
+             return  rej(error)
+         }
+         console.log("DELETE CLUES FUNCTION CALLED")
+         console.log(results.rows)
+         res(results.rows)
+     }) 
+   })
+ }
+//remove a game from the table by it
+ async function deleteAGame(gameID){
+    return await new Promise ((res, rej) => {
+         pool.query(`DELETE FROM games WHERE game_id=${gameID}`, (error, results) => {
+         if (error) {
+             return  rej(error)
+         }
+         console.log("DELETE A GAME FUNCTION CALLED")
+         console.log(results.rows)
+         res(results.rows)
+     }) 
+   })
+ }
+
+ //delete categories by game
+ async function deleteCategoriesByGame(gameID){
+    return await new Promise ((res, rej) => {
+         pool.query(`DELETE FROM categories WHERE game_id=${gameID}`, (error, results) => {
+         if (error) {
+             return  rej(error)
+         }
+         console.log("DELETE CATEGORIES FUNCTION CALLED")
+         console.log(results.rows)
+         res(results.rows)
+     }) 
+   })
+ }
+
  //this function is called when get request is made to /games/:id, 
  //and it returns the game data required for the front end to 
  //display a game for the user to play
@@ -303,9 +363,7 @@ router.get('/edit/:id', playGame);
 
 router.post('/:id', updateGame);
 
-router.delete('/:id/', (req,res)=>{
-    res.send("This route will delete a game from the database")
-});
+router.delete('/:id/', deleteGame);
 
 
 
