@@ -22,6 +22,19 @@ async function insertGame(title, author_id, author_name){
     })
 }
 
+//update a row of game data in the games table
+async function updateAGame(id, gameData){
+    return await new Promise((res, rej) => {
+        pool.query(`UPDATE games SET title = '${gameData.title}'
+        WHERE game_id=${id};`, (error, results) => {
+            if(error){
+                return rej(error)
+            }
+            res(results.rows)
+        })
+    })
+}
+
 //insert a row into the categories table
 async function insertCategory(title, game_id){
     return await new Promise((res, rej) => {
@@ -34,10 +47,35 @@ async function insertCategory(title, game_id){
     })
 }
 
+//update a row of game category in the categories table
+async function updateACategory(id, catData){
+    return await new Promise((res, rej) => {
+        pool.query(`UPDATE categories SET title = '${catData}'
+        WHERE cat_id=${id};`, (error, results) => {
+            if(error){
+                return rej(error)
+            }
+            res(results.rows)
+        })
+    })
+}
+
 //insert a row into the clues table
 async function insertClue(question, answer, cat_id){
     return await new Promise((res, rej) => {
         pool.query(`INSERT INTO clues (question, answer ,cat_id) VALUES ('${question}', '${answer}', ${cat_id}) RETURNING *`, (error, results) => {
+            if(error){
+                return rej(error)
+            }
+            res(results.rows)
+        })
+    })
+}
+//update a row in the clues table
+async function updateAClue(clueID, newQuestion, newAnswer){
+    return await new Promise((res, rej) => {
+        pool.query(`UPDATE clues SET question = '${newQuestion}', answer='${newAnswer}'
+        WHERE clue_id=${clueID};`, (error, results) => {
             if(error){
                 return rej(error)
             }
@@ -206,9 +244,40 @@ const getAllGames = async (request, response) => {
 
   const updateGame = async (request, response) => {
     const {id} = request.params
-    console.log("UPDATE GAME FUNCTION CALLED")
+    console.log("UPDATE GAME FUNCTION CALLED FOR GAME ID")
     console.log(id)
-    console.log(request.body)
+    const newGameData = request.body
+    console.log("NEW GAME DATA IS")
+    console.log(newGameData)
+    console.log("neW catEgory data is")
+    const newCatData = newGameData.categories
+    console.log(newCatData)
+    const newQuestions = newGameData.clues
+    const newAnswers = newGameData.responses    
+    //update the game row in the games table
+    await updateAGame(id, request.body)
+
+    //get the categories to update
+    const categoriesToUpdate = await getCategoriesOfGame(id)
+    console.log(categoriesToUpdate)
+    //update categories
+    for (let i =0; i < 6; i++){
+        const catData = categoriesToUpdate[i]
+        await updateACategory(catData.cat_id, newCatData[i])
+
+        //get clues to update
+        const cluesToUpdate = await getCluesOfCategory(catData.cat_id)
+
+        for (let j = 0; j < 5; j++){
+            const clueID = cluesToUpdate[j].clue_id
+            const newQuestion = newQuestions[j+5*i]
+            const newAnswer = newAnswers[j+5*i]
+            await updateAClue(clueID,newQuestion,newAnswer)
+        }
+    }
+
+
+
   }
 
 

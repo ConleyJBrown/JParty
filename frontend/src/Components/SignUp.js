@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 export default function SignUp(){
@@ -87,6 +88,11 @@ export default function SignUp(){
             </label>
             <input type = "submit"/>
         </form>
+        <div>
+                <Link to="/">
+                <button>HOME</button>
+                </Link>
+            </div>
         </>
 
     )

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {store} from '../store';
 import { logIn, logOut } from '../loginSlice';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 
@@ -69,6 +70,11 @@ export default function LogIn(){
             </label>
             <input type = "submit"/>
         </form>
+        <div>
+                <Link to="/">
+                <button>HOME</button>
+                </Link>
+        </div>
         </>
 
     )
